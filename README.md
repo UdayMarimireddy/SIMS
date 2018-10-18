@@ -1,2 +1,2 @@
 # SIMS
-JavaScript Final Year Project
+JavaScript Final Year Project.

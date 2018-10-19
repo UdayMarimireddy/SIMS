@@ -15,7 +15,7 @@
         $( '#loginPage' ).height( $(window).height() );
         
         $( window ).resize( function() {
-            $( '#loginPage' ).height( $( window ).height() );
+            $( '#loginPage' ).height( $( window ).height() - 50 );
         } );
         
         THIS.login = function() {

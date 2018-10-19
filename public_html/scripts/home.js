@@ -14,10 +14,10 @@
             $( this ).addClass( 'active' );
         } );
         
-        $( '#home' ).height( $(window).height() - 100 );
+        $( '#home' ).height( $(window).height() - 122 );
         
         $( window ).resize( function() {
-            $( '#home' ).height( $( window ).height() - 100 );
+            $( '#home' ).height( $( window ).height() - 152 );
         } );
         
         $( '#toggleMenu' ).click( function() {

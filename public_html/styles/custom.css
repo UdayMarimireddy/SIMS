@@ -17,6 +17,9 @@
      height: 50px;
      width: 50px;
 }
+ #loginPage > div H1 {
+     color: #262626
+ }
  .signin input, .signup input {
      height: 25px;
     border: 0;
@@ -104,9 +107,13 @@
 }
 /*Footer*/
  footer {
-     background-color:#222222;
+    background-color:#222;
     font-family: 'Open Sans', sans-serif;
-     border-top: 1px solid blanchedalmond;
+    height: 50px;
+    padding-top: 9px;
+     position: fixed;
+    bottom: 0px;
+    width: 100%;
 }
  .copyright {
      min-height:40px;
@@ -162,23 +169,6 @@
      text-align: center;
     /*display: inline-flex*/
 }
- .autocomplete input{
-     width: 200px;
-     height: 30px;
-}
- #busList {
-     background-color: white;
-     text-align: center;
-     padding: 10px;
-     margin: 10px;
-     box-shadow: 5px 5px 5px grey;
-}
- #busList h5 {
-     float: left;
-     padding: 20px;
-}
- #busList h6 {
-}
  .autoc_drop_down {
      background-color: whitesmoke;
      border: solid 1px;
@@ -189,42 +179,4 @@
  .help-block {
      line-height: 100%;
 }
-
-/*Seat Layout*/
-.seatSelection {
-  text-align: center;
-  padding: 5px;
-	margin: 15px;}
-
-.seatsReceipt {text-align: center;}
-
-.seatNumber {
-	display: inline;
-	padding: 10px;
-	background-color: #5c86eb;
-	color: #FFF;
-	border-radius: 5px;
-	cursor: default;
-	height: 25px;
-	width: 25px;
-	line-height: 25px;
-	text-align: center;
- }
-
-.seatRow {padding: 10px;}
-
-.seatSelected {
-	background-color: lightgreen;
-	color: black;
- }
-
-.seatUnavailable {background-color: gray;}
-
-.seatRowNumber {
-	clear: none;
-	display: inline;
- }
-
 .hidden {display: none;}
-
-.seatsAmount {max-width: 2em;}

@@ -92,6 +92,8 @@
                         {
                             Notification.warning("User already Exists, please try with other username..!");
                         }
+                        
+                        $state.go( $state.current, {}, { reload: true } );
             }, function ( error ) {
                         
                 console.log( error );

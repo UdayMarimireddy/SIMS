@@ -1,4 +1,10 @@
-var routerApp = angular.module( 'SIMS', [ 'ui.bootstrap', 'ui.router', 'oc.lazyLoad', 'ngRoute', 'ui-notification' ] );
+var routerApp = angular.module( 'SIMS', 
+                                [ 'ui.bootstrap',
+                                    'ui.router',
+                                    'oc.lazyLoad',
+                                    'ngRoute',
+                                    'ui-notification'
+                                ] );
 
 routerApp.config( [ '$stateProvider','$urlRouterProvider', '$httpProvider', function( $stateProvider, $urlRouterProvider, $httpProvider ) {
 
@@ -49,6 +55,14 @@ routerApp.config( [ '$stateProvider','$urlRouterProvider', '$httpProvider', func
             },
             onExit: function() {
                 console.log( '' );
+            }
+        } )
+        
+        .state( 'SIMS.home.about', {
+            url: '/about',
+            templateUrl: 'views/about/about.html',
+            data: {
+              loginRequired: true
             }
         } )
     }

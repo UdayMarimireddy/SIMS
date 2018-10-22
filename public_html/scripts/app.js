@@ -78,6 +78,42 @@ function SIMSCtrl( $rootScope ) {
     
 }
 
+routerApp.factory( 'SIMSFactory', SIMSFactory );
+
+SIMSFactory.$inject = [ '$window' ];
+
+function SIMSFactory( $window ) {
+    var service = {};
+    
+    service.getCurrentLoggedinIUser = function()
+    {
+        if( $window.localStorage[ 'userToken' ] )
+        {
+            var parsedToken = parseJWT( $window.localStorage[ 'userToken' ] );
+
+            return parsedToken.username;
+        }
+        else
+        {
+            return '';
+        }
+    };
+    
+    //ParseJWT as function to be later used in another service method inside this service
+    function parseJWT( token )
+    {
+        if( !token )
+            return;
+        
+        var base64Url = token.split( '.' )[ 1 ];
+        var base64    = base64Url.replace( '-', '+' ).replace( '_', '/' );
+        
+        return JSON.parse( $window.atob( base64 ) );
+    };
+
+    return service;
+}
+
 routerApp.factory( 'tokenAuthentication', tokenAuthentication );
 
 tokenAuthentication.$inject = [];
@@ -93,15 +129,16 @@ function tokenAuthentication() {
     };
 }
 
-routerApp.run( [ '$rootScope', '$location', function( $rootScope, $location ) {
+routerApp.run( [ '$rootScope', '$location', 'SIMSFactory', function( $rootScope, $location, SIMSFactory ) {
         
-        $location.path( '/SIMS' );
-            
         $rootScope.$on( '$stateChangeStart', function ( event, toState, toParams ) {
-            var loginRequired = toState.data.loginRequired;
+            
+            var loggedInUser = SIMSFactory.getCurrentLoggedinIUser();
 
-            if( $rootScope.blocklogin && loginRequired )
-                window.location.reload();
+            if ( !loggedInUser )
+            {
+                $location.path( '/SIMS' );
+            }
         } );
         
     }

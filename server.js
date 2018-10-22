@@ -27,6 +27,7 @@ app.use( bodyParser.json( { type: 'application/vnd.api+json' } ) );
 
 app.post( '/SIMS', routes.authenticate );
 app.use( '/SIMS/', authorize.tokenAuthentication );
+app.get( '/SIMS/getAllStudentDetails/', routes.getAllStudentDetails );
 
 app.use( express.static( 'public_html' ) );
 app.get( '/', function( req, res ) {

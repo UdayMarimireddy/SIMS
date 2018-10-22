@@ -3,7 +3,8 @@ var routerApp = angular.module( 'SIMS',
                                     'ui.router',
                                     'oc.lazyLoad',
                                     'ngRoute',
-                                    'ui-notification'
+                                    'ui-notification',
+                                    'ngTable'
                                 ] );
 
 routerApp.config( [ '$stateProvider','$urlRouterProvider', '$httpProvider', function( $stateProvider, $urlRouterProvider, $httpProvider ) {

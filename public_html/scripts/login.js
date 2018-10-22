@@ -27,7 +27,7 @@
             };
             
             signInService
-                    .signIn( signInInfo )
+                    .userEntry( signInInfo )
                     .then( function ( success ) {
                         
                         if ( success.data.type === true ) {
@@ -59,7 +59,7 @@
             };
             
             signInService
-                    .checkUsername( checkUsersInfo )
+                    .userEntry( checkUsersInfo )
                     .then( function ( success ) {
                         for ( var i in success.data )
                         {
@@ -76,7 +76,7 @@
                             };
 
                             signInService
-                                    .signup( signUpInfo )
+                                    .userEntry( signUpInfo )
                                     .then( function ( success ) {
 
                                         Notification.success( "Registered!! You can signin now.." );
@@ -107,37 +107,15 @@
 
     function signInService($http) {
         return {
-            signIn: signIn,
-            signup: signup,
-            checkUsername: checkUsername
+            userEntry: userEntry
         };
 
-        function signIn( signInInfo ) {
+        function userEntry( signInInfo ) {
             
             return $http( {
                 method: 'POST',
                 type: 'JSON',
                 data:  signInInfo ,
-                url: '/SIMS'
-            } );
-        }
-
-        function signup( signupInfo ) {
-            
-            return $http( {
-                method: 'POST',
-                type: 'JSON',
-                data: signupInfo,
-                url: '/SIMS'
-            } );
-        }
-
-        function checkUsername( checkUsersInfo ) {
-            
-            return $http( {
-                method: 'POST',
-                type: 'JSON',
-                data:  checkUsersInfo ,
                 url: '/SIMS'
             } );
         }
@@ -155,7 +133,7 @@
             {  
                 modelVal.$validators.compareTo = function (val)  
                 {  
-                    return val == scope.confirmPassword;  
+                    return val === scope.confirmPassword;  
                 };  
                 scope.$watch("confirmPassword", function ()  
                 {  

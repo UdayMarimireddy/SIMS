@@ -37,11 +37,9 @@ exports.authenticate = function( req, res ) {
     
     if ( purpose === "checkUsers" )
     {
-        var QUERY = "SELECT username FROM SIMS.USERS";
-    
-        console.log("CheckUsers Query: " + QUERY);
+        var checkUsersQuery = "SELECT username FROM SIMS.USERS";
 
-        connection.query( QUERY, function( err, rows, fields ) {
+        getUserDB( checkUsersQuery, function( err, rows ) {
             if ( !err )
                 res.json( rows );
             else
@@ -54,11 +52,9 @@ exports.authenticate = function( req, res ) {
     //SignUp Code
     else if ( purpose === "signUp" )
     {
-        var QUERY = "INSERT INTO SIMS.USERS VALUES ( '" + user + "', '" + email + "', '" + encrypt( pass ) + "' )";
-    
-        console.log("SignUp Query: " + QUERY);
+        var createUserQuery = "INSERT INTO SIMS.USERS VALUES ( '" + user + "', '" + email + "', '" + encrypt( pass ) + "' )";
 
-        connection.query( QUERY, function( err, rows, fields ) {
+        getUserDB( createUserQuery, function( err, rows ) {
             
             console.log(err);
             
@@ -74,18 +70,23 @@ exports.authenticate = function( req, res ) {
     //SignIn Code
     else if ( purpose === "signIn" )
     {
-        var QUERY = "SELECT username FROM SIMS.USERS WHERE username = '" + user + "' AND password = '" + encrypt( pass ) + "'";
-    
-        console.log("SignIn Query: " + QUERY);
+        var checkUserQuery = "SELECT username FROM SIMS.USERS WHERE username = '" + user + "' AND password = '" + encrypt( pass ) + "'";
+        var userDetailsQuery = "SELECT * FROM SIMS.USERS WHERE username = '" + user + "';";
 
-        connection.query( QUERY, function( err, rows, fields ) {
+        getUserDB( checkUserQuery, function( err, rows ) {
+            
             if ( !err )
             {
-                if ( rows.length )
+                if ( rows.length > 0  )
                 {
-                    console.log( 'Logged in with: ' + user );
-                    getUserDB( user, function( user ) {
-
+                    getUserDB( userDetailsQuery, function( err, user ) {
+                        
+                        if ( err )
+                            res.status(500).send('Error while performing Query!');
+                        
+                        if ( user && user[ 0 ] )
+                            user = user[ 0 ];
+                        
                         if ( !user )
                             return res.status(401).send("The username is not existing");
 
@@ -117,6 +118,22 @@ exports.authenticate = function( req, res ) {
     }
 
 };
+
+exports.getAllStudentDetails = function( req, res )
+{
+    var regNum = req.body.regNum;
+    var studentDetailsQuery = "SELECT * FROM SIMS.STUDENT_INFO";
+    
+    getUserDB( studentDetailsQuery, function( err, studentData ) {
+        
+        if ( err )
+            res.status(500).send('Error while performing Query!');
+        
+        res.json(studentData);
+        
+    } );
+}
+
 //Creating the JSON Web Token
 function createToken( user ) 
 {
@@ -124,17 +141,16 @@ function createToken( user )
 }
 
 //Accessing the Database for the specified user
-function getUserDB( username, callback )
+function getUserDB( _Query, callback )
 {
-    connection.query( "SELECT * FROM SIMS.USERS WHERE username = '" + username + "';", function( err, rows, fields ) {
+    console.log("Query: " + _Query);
+    
+    connection.query( _Query, function( err, rows, fields ) {
 
         if ( err )
-            throw err;
+            callback( err, rows );
 
-        if ( rows[ 0 ] )
-            callback( rows[ 0 ] );
-        else
-            callback( rows );
+        callback( err, rows );
 
     } );
 }

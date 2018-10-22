@@ -1,3 +1,24 @@
-<div class="container" id="headerContent">
-    <h1 class="image-text main-header-family"> SIMS </h1>
+<div class="container" id="headerContent">    
+    <h1 class="text-center login-title">SIMS</h1>
+<!--    <form class="text-left" name="lookUpForm">
+        <div style="text-align: center">
+            <input style="width: 25%" type="text" name="" class="form-control"
+                   ng-model="homeVM.registrationNumber"
+                   ng-blur="homeVM.getStudentDetails()"
+                   placeholder="registration number here.." required><BR>
+        </div>
+    </form>-->
+    
+    <table ng-show="homeVM.studentDetails.data.length > 0 " ng-table="homeVM.studentDetails" class="table" show-filter="false">
+        <tr ng-repeat="student in $data">
+            <td title="'Name'" filter="{ name: 'text'}" sortable="'name'">
+                {{student.name}}</td>
+            <td title="'Year'" filter="{ year: 'number'}" sortable="'year'">
+                {{student.year}}</td>
+            <td title="'Department'" filter="{ department: 'number'}" sortable="'department'">
+                {{student.department}}</td>
+            <td title="'Section'" filter="{ section: 'number'}" sortable="'section'">
+                {{student.section}}</td>
+        </tr>
+    </table>
 </div>

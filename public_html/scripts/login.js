@@ -31,7 +31,7 @@
                     .then( function ( success ) {
                         
                         if ( success.data.type === true ) {
-                            localStorage.setItem( 'userToken', success.data.token );
+                            sessionStorage.setItem( 'userToken', success.data.token );
                             
                             $rootScope.blocklogin = false;
                             Notification.success('Signin Successful!!');

@@ -32,7 +32,7 @@
         {
             $rootScope.blocklogin = true;
 
-            localStorage.removeItem( 'userToken' );
+            sessionStorage.removeItem( 'userToken' );
 
             Notification.success( "Signout Successful!!" );
             $state.go( 'SIMS' );

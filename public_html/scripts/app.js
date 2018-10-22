@@ -87,9 +87,9 @@ function SIMSFactory( $window ) {
     
     service.getCurrentLoggedinIUser = function()
     {
-        if( $window.localStorage[ 'userToken' ] )
+        if( sessionStorage[ 'userToken' ] )
         {
-            var parsedToken = parseJWT( $window.localStorage[ 'userToken' ] );
+            var parsedToken = parseJWT( sessionStorage[ 'userToken' ] );
 
             return parsedToken.username;
         }
@@ -122,7 +122,7 @@ function tokenAuthentication() {
     return {
         request: function( config ) {
             
-            config.headers.tokenauthenticate = localStorage.getItem( 'userToken' );
+            config.headers.tokenauthenticate = sessionStorage.getItem( 'userToken' );
             
             return config;
         }
